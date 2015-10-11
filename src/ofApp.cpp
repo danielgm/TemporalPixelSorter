@@ -216,13 +216,32 @@ string ofApp::getOutputName() {
 }
 
 void ofApp::step() {
-  for (int i = 0; i < frameCount - 1; i++) {
+  ofColor* outputColorPixels = new ofColor[frameCount * frameWidth * frameHeight];
+
+  for (int i = 0; i < frameCount; i++) {
     for (int x = 0; x < frameWidth; x++) {
       for (int y = 0; y < frameHeight; y++) {
-        sortPixel(x, y, i, i + 1);
+        outputColorPixels[x * frameHeight * frameCount + y * frameCount + i] = getColor(x, y, i);
       }
     }
   }
+
+  for (int x = 0; x < frameWidth; x++) {
+    for (int y = 0; y < frameHeight; y++) {
+      ofColor* start = outputColorPixels + (x * frameHeight * frameCount + y * frameCount);
+      sort(start, start + frameCount, comparePixel);
+    }
+  }
+
+  for (int i = 0; i < frameCount; i++) {
+    for (int x = 0; x < frameWidth; x++) {
+      for (int y = 0; y < frameHeight; y++) {
+        setColor(x, y, i, outputColorPixels[x * frameHeight * frameCount + y * frameCount + i]);
+      }
+    }
+  }
+
+  delete[] outputColorPixels;
 }
 
 void ofApp::sortPixel(int x, int y, int frame0, int frame1) {
@@ -258,3 +277,4 @@ void ofApp::currFrameChanged() {
   memcpy(outputDrawPixels, outputPixels + (currFrame * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
   outputDrawImage.setFromPixels(outputDrawPixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
 }
+
