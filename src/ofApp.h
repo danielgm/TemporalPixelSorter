@@ -22,8 +22,15 @@ class ofApp : public ofBaseApp{
     void clearFrames();
     int countFrames(string path);
     void loadFrames(string path);
+    void saveFrames(string path);
+    string getOutputName();
 
     void step();
+    void sortPixel(int x, int y, int frame0, int frame1);
+    ofColor getColor(int x, int y, int frame);
+    void setColor(int x, int y, int frame, ofColor c);
+
+    void currFrameChanged();
 
   int screenWidth;
   int screenHeight;
@@ -35,9 +42,13 @@ class ofApp : public ofBaseApp{
   int frameRate;
   unsigned long long prevTime;
   int currFrame;
+  bool isPlaying;
 
-  unsigned char* pixelBuffer;
+  unsigned char* inputPixels;
+  unsigned char* outputPixels;
 
-  ofImage drawImage;
-  unsigned char* drawPixels;
+  ofImage inputDrawImage;
+  ofImage outputDrawImage;
+  unsigned char* inputDrawPixels;
+  unsigned char* outputDrawPixels;
 };
