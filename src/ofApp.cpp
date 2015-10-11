@@ -17,6 +17,8 @@ void ofApp::setup() {
   outputPixels = NULL;
 
   loadFrames("bmosmall");
+
+  doSort();
 }
 
 void ofApp::update() {
@@ -58,33 +60,6 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::keyReleased(int key) {
   switch (key) {
-    case ' ':
-      step();
-      break;
-    case '1':
-      for (int i = 0; i < 5; i++) {
-        cout << i << endl;
-        step();
-      }
-      break;
-    case '2':
-      for (int i = 0; i < 10; i++) {
-        cout << i << endl;
-        step();
-      }
-      break;
-    case '3':
-      for (int i = 0; i < 50; i++) {
-        cout << i << endl;
-        step();
-      }
-      break;
-    case '4':
-      for (int i = 0; i < 100; i++) {
-        cout << i << endl;
-        step();
-      }
-      break;
     case 'f':
       isPlaying = !isPlaying;
       break;
@@ -215,7 +190,7 @@ string ofApp::getOutputName() {
   }
 }
 
-void ofApp::step() {
+void ofApp::doSort() {
   ofColor* outputColorPixels = new ofColor[frameCount * frameWidth * frameHeight];
 
   for (int i = 0; i < frameCount; i++) {
@@ -226,10 +201,13 @@ void ofApp::step() {
     }
   }
 
+  int stepSize = 15;
   for (int x = 0; x < frameWidth; x++) {
     for (int y = 0; y < frameHeight; y++) {
-      ofColor* start = outputColorPixels + (x * frameHeight * frameCount + y * frameCount);
-      sort(start, start + frameCount, comparePixel);
+      for (int i = 0; i < frameCount; i += stepSize) {
+        ofColor* temporalColumn = outputColorPixels + (x * frameHeight * frameCount + y * frameCount);
+        sort(temporalColumn + i, temporalColumn + MIN(frameCount - 1, i + stepSize), comparePixel);
+      }
     }
   }
 
@@ -242,18 +220,6 @@ void ofApp::step() {
   }
 
   delete[] outputColorPixels;
-}
-
-void ofApp::sortPixel(int x, int y, int frame0, int frame1) {
-  ofColor c0 = getColor(x, y, frame0);
-  ofColor c1 = getColor(x, y, frame1);
-  float v0 = c0.getLightness();
-  float v1 = c1.getLightness();
-
-  if (v0 > v1) {
-    setColor(x, y, frame0, c1);
-    setColor(x, y, frame1, c0);
-  }
 }
 
 ofColor ofApp::getColor(int x, int y, int frame) {

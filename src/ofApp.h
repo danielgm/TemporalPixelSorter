@@ -2,15 +2,6 @@
 
 #include "ofMain.h"
 
-bool comparePixel(const ofColor &c0, const ofColor &c1) {
-  float v0 = c0.getLightness();
-  float v1 = c1.getLightness();
-  if (v0 != v1) return v0 < v1;
-  if (c0.r != c1.r) return c0.r < c1.r;
-  if (c0.g != c1.g) return c0.g < c1.g;
-  return c0.b < c1.b;
-}
-
 class ofApp : public ofBaseApp{
 
   public:
@@ -34,8 +25,7 @@ class ofApp : public ofBaseApp{
     void saveFrames(string path);
     string getOutputName();
 
-    void step();
-    void sortPixel(int x, int y, int frame0, int frame1);
+    void doSort();
     ofColor getColor(int x, int y, int frame);
     void setColor(int x, int y, int frame, ofColor c);
 
@@ -61,3 +51,12 @@ class ofApp : public ofBaseApp{
   unsigned char* inputDrawPixels;
   unsigned char* outputDrawPixels;
 };
+
+bool comparePixel(const ofColor &c0, const ofColor &c1) {
+  float v0 = c0.getLightness();
+  float v1 = c1.getLightness();
+  if (v0 != v1) return v0 < v1;
+  if (c0.r != c1.r) return c0.r < c1.r;
+  if (c0.g != c1.g) return c0.g < c1.g;
+  return c0.b < c1.b;
+}
