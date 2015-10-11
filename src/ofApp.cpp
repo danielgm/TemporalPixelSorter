@@ -201,12 +201,21 @@ void ofApp::doSort() {
     }
   }
 
+  int direction = 1;
   int stepSize = 15;
   for (int x = 0; x < frameWidth; x++) {
     for (int y = 0; y < frameHeight; y++) {
       for (int i = 0; i < frameCount; i += stepSize) {
         ofColor* temporalColumn = outputColorPixels + (x * frameHeight * frameCount + y * frameCount);
-        sort(temporalColumn + i, temporalColumn + MIN(frameCount - 1, i + stepSize), comparePixel);
+
+        if (direction > 0) {
+          sort(temporalColumn + i, temporalColumn + MIN(frameCount - 1, i + stepSize), comparePixel);
+          direction = -1;
+        }
+        else {
+          sort(temporalColumn + i, temporalColumn + MIN(frameCount - 1, i + stepSize), comparePixelReverse);
+          direction = 1;
+        }
       }
     }
   }
