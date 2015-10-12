@@ -27,7 +27,6 @@ class ofApp : public ofBaseApp{
     string getOutputName();
 
     void doSort();
-    int nextDissimilarPixelIndex(ofColor* pixels, int x, int y, int i);
     ofColor getColor(int x, int y, int frame);
     void setColor(int x, int y, int frame, ofColor c);
 

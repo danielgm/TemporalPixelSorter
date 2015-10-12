@@ -8,7 +8,7 @@ void ofApp::setup() {
   frameHeight = 0;
   frameCount = 0;
 
-  frameRate = 2;
+  frameRate = 12;
   prevTime = ofGetElapsedTimeMillis();
   currFrame = 0;
   isPlaying = true;
@@ -220,20 +220,10 @@ void ofApp::doSort() {
     }
   }
 
-  int start;
-  int end;
   for (int x = 0; x < frameWidth; x++) {
-    cout << "Row: " << x << endl;
-
     for (int y = 0; y < frameHeight; y++) {
       ofColor* temporalColumn = pixels + (x * frameHeight * frameCount + y * frameCount);
-
-      start = 0;
-      while (start < frameCount) {
-        end = nextDissimilarPixelIndex(pixels, x, y, start);
-        sort(temporalColumn + start, temporalColumn + end, comparePixel);
-        start = end;
-      }
+      sort(temporalColumn, temporalColumn + frameCount, comparePixel);
     }
   }
 
@@ -246,15 +236,6 @@ void ofApp::doSort() {
   }
 
   delete[] pixels;
-}
-
-int ofApp::nextDissimilarPixelIndex(ofColor* pixels, int x, int y, int i) {
-  int threshold = 60;
-  float v = pixels[x * frameHeight * frameCount + y * frameCount + i].getLightness();
-  do {
-    i++;
-  } while (i < frameCount && ABS(pixels[x * frameHeight * frameCount + y * frameCount + i].getLightness() - v) < threshold);
-  return i;
 }
 
 ofColor ofApp::getColor(int x, int y, int frame) {
