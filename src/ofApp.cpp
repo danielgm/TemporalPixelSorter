@@ -8,7 +8,7 @@ void ofApp::setup() {
   frameHeight = 0;
   frameCount = 0;
 
-  frameRate = 10;
+  frameRate = 2;
   prevTime = ofGetElapsedTimeMillis();
   currFrame = 0;
   isPlaying = true;
@@ -19,18 +19,19 @@ void ofApp::setup() {
   loadFrames("terminatorbikesmall");
 
   doSort();
+
 }
 
 void ofApp::update() {
   if (isPlaying) {
     unsigned long long now = ofGetElapsedTimeMillis();
     unsigned long delta = now - prevTime;
-    if (delta >= frameRate) {
-      currFrame += delta / frameRate;
+    if (delta >= 1000.0 / frameRate) {
+      currFrame += floor(delta * frameRate / 1000);
       if (currFrame >= frameCount) {
         currFrame = 0;
       }
-      prevTime = now;
+      prevTime = now - (delta % frameRate);
 
       currFrameChanged();
     }
