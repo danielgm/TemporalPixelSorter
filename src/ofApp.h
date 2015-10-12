@@ -20,7 +20,8 @@ class ofApp : public ofBaseApp{
     void gotMessage(ofMessage msg);
 
     void clearFrames();
-    int countFrames(string path);
+    int getFirstFrameIndex(string path);
+    int countFrames(string path, int firstFrameIndex);
     void loadFrames(string path);
     void saveFrames(string path);
     string getOutputName();
