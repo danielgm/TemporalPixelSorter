@@ -182,7 +182,7 @@ void ofApp::saveFrames(string path) {
   ofImage image;
   unsigned char* pixels = new unsigned char[frameWidth * frameHeight * 3];
 
-  ofDirectory dir(path);
+  ofDirectory dir("output/" + path);
   if(!dir.exists()){
     dir.create(true);
   }
@@ -190,7 +190,7 @@ void ofApp::saveFrames(string path) {
   for (int i = 0; i < frameCount; i++) {
     memcpy(pixels, outputPixels + (i * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
     image.setFromPixels(pixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
-    image.saveImage(path + "/frame" + ofToString(i + 1, 0, 4, '0') + ".png");
+    image.saveImage("output/" + path + "/frame" + ofToString(i + 1, 0, 4, '0') + ".gif");
   }
 
   delete[] pixels;
@@ -253,10 +253,14 @@ void ofApp::setColor(int x, int y, int frame, ofColor c) {
 }
 
 void ofApp::currFrameChanged() {
-  memcpy(inputDrawPixels, inputPixels + (currFrame * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
-  inputDrawImage.setFromPixels(inputDrawPixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
+  if (inputPixels != NULL) {
+    memcpy(inputDrawPixels, inputPixels + (currFrame * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
+    inputDrawImage.setFromPixels(inputDrawPixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
+  }
 
-  memcpy(outputDrawPixels, outputPixels + (currFrame * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
-  outputDrawImage.setFromPixels(outputDrawPixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
+  if (outputPixels != NULL) {
+    memcpy(outputDrawPixels, outputPixels + (currFrame * frameWidth * frameHeight * 3), frameWidth * frameHeight * 3);
+    outputDrawImage.setFromPixels(outputDrawPixels, frameWidth, frameHeight, OF_IMAGE_COLOR);
+  }
 }
 
