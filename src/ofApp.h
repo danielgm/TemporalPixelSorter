@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "FrameSequence.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,8 +21,6 @@ class ofApp : public ofBaseApp{
     void gotMessage(ofMessage msg);
 
     void clearFrames();
-    int getFirstFrameIndex(string path);
-    int countFrames(string path, int firstFrameIndex);
     void loadFrames(string path);
     void saveFrames(string path);
     string getOutputName();
@@ -51,6 +50,8 @@ class ofApp : public ofBaseApp{
   ofImage outputDrawImage;
   unsigned char* inputDrawPixels;
   unsigned char* outputDrawPixels;
+
+  FrameSequence frameSequence;
 };
 
 bool comparePixel(const ofColor &c0, const ofColor &c1) {

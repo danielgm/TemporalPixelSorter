@@ -117,58 +117,19 @@ void ofApp::clearFrames() {
   frameHeight = 0;
 }
 
-int ofApp::countFrames(string path, int startIndex) {
-  int n = startIndex;
-  ofFile file;
-  while (file.doesFileExist(path + "/frame" + ofToString(n, 0, 4, '0') + ".png")) n++;
-  return n - startIndex;
-}
-
-int ofApp::getFirstFrameIndex(string path) {
-  for (int frameIndex = 0; frameIndex < 1000; frameIndex++) {
-    ofDirectory dir(path + "/frame" + ofToString(frameIndex, 0, 4, '0') + ".png");
-    if (dir.exists()) {
-      return frameIndex;
-    }
-  }
-  return -1;
-}
-
 void ofApp::loadFrames(string path) {
-  ofImage image;
-
   clearFrames();
 
-  int firstFrameIndex = getFirstFrameIndex(path);
-  if (firstFrameIndex < 0) {
-    cout << "Couldn't find frame: " << path << "/frame%04d.png" << endl;
-    return;
-  }
+  frameSequence.loadFrames(path);
 
-  image.loadImage(path + "/frame" + ofToString(firstFrameIndex, 0, 4, '0') + ".png");
+  frameWidth = frameSequence.getFrameWidth();
+  frameHeight = frameSequence.getFrameHeight();
+  frameCount = frameSequence.getFrameCount();
 
-  frameWidth = image.width;
-  frameHeight = image.height;
-  frameCount = countFrames(path, firstFrameIndex);
-
-  cout << "Loading " << frameCount << " frames " << endl
-    << "\tPath: " << path << endl
-    << "\tDimensions: " << frameWidth << "x" << frameHeight << endl
-    << "\tSize: " << floor(frameCount * frameWidth * frameHeight * 3 / 1024 / 1024) << " MB" << endl;
-
-  inputPixels = new unsigned char[frameCount * frameWidth * frameHeight * 3];
+  inputPixels = frameSequence.getPixels();
   outputPixels = new unsigned char[frameCount * frameWidth * frameHeight * 3];
 
-  for (int frameIndex = 0; frameIndex < frameCount; frameIndex++) {
-    image.loadImage(path + "/frame" + ofToString(firstFrameIndex + frameIndex, 0, 4, '0') + ".png");
-    image.setImageType(OF_IMAGE_COLOR);
-
-    for (int i = 0; i < frameWidth * frameHeight * 3; i++) {
-      unsigned char c = image.getPixels()[i];
-      inputPixels[frameIndex * frameWidth * frameHeight * 3 + i] = c;
-      outputPixels[frameIndex * frameWidth * frameHeight * 3 + i] = c;
-    }
-  }
+  memcpy(outputPixels, inputPixels, frameCount * frameWidth * frameHeight * 3);
 
   inputDrawPixels = new unsigned char[frameWidth * frameHeight * 3];
   outputDrawPixels = new unsigned char[frameWidth * frameHeight * 3];
