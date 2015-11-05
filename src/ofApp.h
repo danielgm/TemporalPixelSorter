@@ -2,8 +2,9 @@
 
 #include "ofMain.h"
 #include "FrameSequence.h"
+#include "TemporalPixelSorter.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
   public:
     void setup();
@@ -20,45 +21,24 @@ class ofApp : public ofBaseApp{
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    void clearFrames();
-    void loadFrames(string path);
+    FrameSequence* loadFrames(string path);
     void saveFrames(string path);
     string getOutputName();
 
-    void doSort();
-    ofColor getColor(int x, int y, int frame);
-    void setColor(int x, int y, int frame, ofColor c);
-
     void currFrameChanged();
 
-  int screenWidth;
-  int screenHeight;
+  private:
+    int screenWidth;
+    int screenHeight;
 
-  int frameWidth;
-  int frameHeight;
-  int frameCount;
+    int frameWidth;
+    int frameHeight;
+    int frameCount;
 
-  int frameRate;
-  unsigned long long prevTime;
-  int currFrame;
-  bool isPlaying;
+    FrameSequence* inputFrames;
+    FrameSequence* outputFrames;
 
-  unsigned char* inputPixels;
-  unsigned char* outputPixels;
-
-  ofImage inputDrawImage;
-  ofImage outputDrawImage;
-  unsigned char* inputDrawPixels;
-  unsigned char* outputDrawPixels;
-
-  FrameSequence frameSequence;
+    ofImage inputDrawImage;
+    ofImage outputDrawImage;
 };
 
-bool comparePixel(const ofColor &c0, const ofColor &c1) {
-  float v0 = c0.getLightness();
-  float v1 = c1.getLightness();
-  if (v0 != v1) return v0 < v1;
-  if (c0.r != c1.r) return c0.r < c1.r;
-  if (c0.g != c1.g) return c0.g < c1.g;
-  return c0.b < c1.b;
-}

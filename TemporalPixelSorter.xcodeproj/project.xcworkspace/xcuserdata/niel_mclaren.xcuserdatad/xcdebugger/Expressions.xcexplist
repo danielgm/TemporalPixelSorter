@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ofImage_&lt;unsigned char&gt;::allocate(int, int, ofImageType):ofImage.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "pixels.getWidth()">
+            </PersistentString>
+            <PersistentString
+               value = "ofGetGlInternalFormat(pixels)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofTexture::allocate(int, int, int):ofTexture.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "internalGlDataType">
+            </PersistentString>
+            <PersistentString
+               value = "ofGetGLFormatFromInternal(internalGlDataType)">
+            </PersistentString>
+            <PersistentString
+               value = "ofGetGlTypeFromInternal(internalGlDataType)">
+            </PersistentString>
+            <PersistentString
+               value = "ofGetUsingArbTex()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

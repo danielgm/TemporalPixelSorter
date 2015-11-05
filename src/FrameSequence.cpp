@@ -6,6 +6,35 @@ FrameSequence::FrameSequence() {
   frameCount = 0;
   frameWidth = 0;
   frameHeight = 0;
+
+  frameRate = 12;
+  prevTime = 0;
+  playing = true;
+  currFrame = 0;
+}
+
+FrameSequence::~FrameSequence() {
+  clearFrames();
+}
+
+FrameSequence* FrameSequence::clone() {
+  FrameSequence* fs = new FrameSequence();
+  fs->setFromPixels(pixels, frameCount, frameWidth, frameHeight);
+  return fs;
+}
+
+void FrameSequence::update() {
+  if (playing) {
+    unsigned long long now = ofGetElapsedTimeMillis();
+    unsigned long delta = now - prevTime;
+    if (delta >= 1000.0 / frameRate) {
+      currFrame += floor(delta * frameRate / 1000);
+      if (currFrame >= frameCount) {
+        currFrame = 0;
+      }
+      prevTime = now - (delta % frameRate);
+    }
+  }
 }
 
 void FrameSequence::clearFrames() {
@@ -20,8 +49,6 @@ void FrameSequence::clearFrames() {
 
 void FrameSequence::loadFrames(string path) {
   ofImage image;
-
-  clearFrames();
 
   int firstFrameIndex = getFirstFrameIndex(path);
   if (firstFrameIndex < 0) {
@@ -51,6 +78,25 @@ void FrameSequence::loadFrames(string path) {
   cout << "Loading complete." << endl;
 }
 
+void FrameSequence::saveFrames(string path) {
+  cout << "Saving to " << path << endl;
+
+  ofImage image;
+
+  ofDirectory dir(path);
+  if(!dir.exists()){
+    dir.create(true);
+  }
+
+  for (int i = 0; i < frameCount; i++) {
+    image.setFromPixels(pixels + (i * frameWidth * frameHeight * 3), frameWidth, frameHeight, OF_IMAGE_COLOR);
+    image.saveImage(path + "/frame" + ofToString(i + 1, 0, 4, '0') + ".gif");
+  }
+
+  cout << "Saving complete." << endl;
+}
+
+
 void FrameSequence::allocatePixels(int count, int width, int height) {
   pixels = new unsigned char[count * width * height * 3];
 
@@ -61,6 +107,16 @@ void FrameSequence::allocatePixels(int count, int width, int height) {
 
 unsigned char* FrameSequence::getPixels() {
   return pixels;
+}
+
+void FrameSequence::setFromPixels(unsigned char* p, int count, int width, int height) {
+  int len = count * width * height * 3;
+  pixels = new unsigned char[len];
+  memcpy(pixels, p, len);
+
+  frameCount = count;
+  frameWidth = width;
+  frameHeight = height;
 }
 
 int FrameSequence::getFrameCount() {
@@ -90,5 +146,57 @@ int FrameSequence::countFrames(string path, int startIndex) {
   ofFile file;
   while (file.doesFileExist(path + "/frame" + ofToString(n, 0, 4, '0') + ".png")) n++;
   return n - startIndex;
+}
+
+ofColor FrameSequence::getColor(int frame, int x, int y) {
+  ofColor result(
+      pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 0],
+      pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 1],
+      pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 2]);
+  return result;
+}
+
+void FrameSequence::setColor(int frame, int x, int y, ofColor c) {
+  pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 0] = c.r;
+  pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 1] = c.g;
+  pixels[frame * frameWidth * frameHeight * 3 + y * frameWidth * 3 + x * 3 + 2] = c.b;
+}
+
+int FrameSequence::getCurrFrame() {
+  return currFrame;
+}
+
+void FrameSequence::setCurrFrame(int index) {
+  currFrame = index;
+}
+
+void FrameSequence::nextFrame() {
+  currFrame++;
+  if (currFrame >= frameCount) {
+    currFrame = 0;
+  }
+}
+
+void FrameSequence::prevFrame() {
+  currFrame--;
+  if (currFrame < 0) {
+    currFrame = frameCount - 1;
+  }
+}
+
+bool FrameSequence::isPlaying() {
+  return playing;
+}
+
+void FrameSequence::play() {
+  playing = true;
+}
+
+void FrameSequence::stop() {
+  playing = false;
+}
+
+unsigned char* FrameSequence::getCurrFramePixels() {
+  return pixels + currFrame * frameWidth * frameHeight * 3;
 }
 
