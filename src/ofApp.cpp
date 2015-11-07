@@ -1,22 +1,11 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-  screenWidth = ofGetWindowWidth();
-  screenHeight = ofGetWindowHeight();
-
-  frameWidth = 0;
-  frameHeight = 0;
-  frameCount = 0;
-
   inputDrawImage = ofImage();
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
   inputFrames->loadFrames("rickmorty-dimension35c-6-short");
-
-  frameCount = inputFrames->getFrameCount();
-  frameWidth = inputFrames->getFrameWidth();
-  frameHeight = inputFrames->getFrameHeight();
 
   outputFrames = inputFrames->clone();
   TemporalPixelSorter::sort(outputFrames);
@@ -30,6 +19,12 @@ void ofApp::update() {
 
 void ofApp::draw() {
   ofBackground(0);
+
+  int screenWidth = ofGetWindowWidth();
+  int screenHeight = ofGetWindowHeight();
+
+  int frameWidth = inputFrames->getFrameWidth();
+  int frameHeight = inputFrames->getFrameHeight();
 
   if (inputFrames != NULL) {
     ofSetColor(255);
@@ -113,11 +108,19 @@ string ofApp::getOutputName() {
 
 void ofApp::currFrameChanged() {
   if (inputFrames != NULL) {
-    inputDrawImage.setFromPixels(inputFrames->getCurrFramePixels(), frameWidth, frameHeight, OF_IMAGE_COLOR);
+    inputDrawImage.setFromPixels(
+        inputFrames->getCurrFramePixels(),
+        inputFrames->getFrameWidth(),
+        inputFrames->getFrameHeight(),
+        OF_IMAGE_COLOR);
   }
 
   if (outputFrames != NULL) {
-    outputDrawImage.setFromPixels(outputFrames->getCurrFramePixels(), frameWidth, frameHeight, OF_IMAGE_COLOR);
+    outputDrawImage.setFromPixels(
+        outputFrames->getCurrFramePixels(),
+        outputFrames->getFrameWidth(),
+        outputFrames->getFrameHeight(),
+        OF_IMAGE_COLOR);
   }
 }
 

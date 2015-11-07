@@ -31,10 +31,6 @@ class ofApp : public ofBaseApp {
     int screenWidth;
     int screenHeight;
 
-    int frameWidth;
-    int frameHeight;
-    int frameCount;
-
     FrameSequence* inputFrames;
     FrameSequence* outputFrames;
 
