@@ -30,6 +30,8 @@ class ofApp : public ofBaseApp {
     void currFrameChanged();
     void setBarChart(int x, int y);
 
+    void screenshot();
+
     TemporalPixelSorter* inputSorter;
     TemporalPixelSorter* outputSorter;
 

@@ -81,6 +81,9 @@ void ofApp::keyReleased(int key) {
       outputFrames->nextFrame();
       currFrameChanged();
       break;
+    case 'p':
+      screenshot();
+      break;
     case 's':
       string outputName = getOutputName();
       outputFrames->saveFrames(outputName);
@@ -172,5 +175,12 @@ void ofApp::setBarChart(int x, int y) {
   data = outputSorter->getColorsByTime(x, y);
   frameCount = outputSorter->getFrameCount();
   outputChart->setData(data, frameCount);
+}
+
+void ofApp::screenshot() {
+  ofImage i;
+  i.allocate(ofGetScreenWidth(), ofGetScreenHeight(), OF_IMAGE_COLOR);
+  i.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
+  i.saveImage("screenie01.png");
 }
 
