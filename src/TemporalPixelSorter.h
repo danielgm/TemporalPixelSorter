@@ -15,7 +15,8 @@ class TemporalPixelSorter {
 
     void loadPixels();
     void updatePixels();
-    float* getBrightnessByTime(int x, int y);
+    ofColor* getColorsByTime(int x, int y);
+    float* getLightnessByTime(int x, int y);
 
   private:
     FrameSequence* frameSequence;

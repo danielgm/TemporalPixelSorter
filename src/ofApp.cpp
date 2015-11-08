@@ -13,8 +13,8 @@ void ofApp::setup() {
   outputSorter->sort();
   outputSorter->updatePixels();
 
-  inputChart = new BarChart();
-  outputChart = new BarChart();
+  inputChart = new ColorBarChart();
+  outputChart = new ColorBarChart();
 
   setBarChart(
       floor(inputFrames->getFrameWidth()/2),
@@ -159,17 +159,17 @@ void ofApp::currFrameChanged() {
 }
 
 void ofApp::setBarChart(int x, int y) {
-  float* data;
+  ofColor* data;
   int frameCount;
 
   targetX = x;
   targetY = y;
 
-  data = inputSorter->getBrightnessByTime(x, y);
+  data = inputSorter->getColorsByTime(x, y);
   frameCount = inputSorter->getFrameCount();
   inputChart->setData(data, frameCount);
 
-  data = outputSorter->getBrightnessByTime(x, y);
+  data = outputSorter->getColorsByTime(x, y);
   frameCount = outputSorter->getFrameCount();
   outputChart->setData(data, frameCount);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "BarChart.h"
+#include "ColorBarChart.h"
 #include "FrameSequence.h"
 #include "TemporalPixelSorter.h"
 
@@ -39,8 +39,8 @@ class ofApp : public ofBaseApp {
     ofImage inputDrawImage;
     ofImage outputDrawImage;
 
-    BarChart* inputChart;
-    BarChart* outputChart;
+    ColorBarChart* inputChart;
+    ColorBarChart* outputChart;
 
     int targetX;
     int targetY;

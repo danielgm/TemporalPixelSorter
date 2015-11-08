@@ -10,6 +10,7 @@
 		1C30B7781BDC7556005A54C1 /* BarChart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C30B7761BDC7556005A54C1 /* BarChart.cpp */; };
 		1C7F22B61BEB24B2005D1328 /* TemporalPixelSorter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F22B41BEB24B2005D1328 /* TemporalPixelSorter.cpp */; };
 		1CD7FD5C1BE53F400033492C /* FrameSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1CD7FD5A1BE53F400033492C /* FrameSequence.cpp */; };
+		1CE787D81BEED0B800BA017A /* ColorBarChart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1CE787D61BEED0B800BA017A /* ColorBarChart.cpp */; };
 		5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC5DA1C87211D4F6377DA719 /* tinyxmlparser.cpp */; };
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
 		933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B40EDA85BEB63E46785BC29 /* tinyxml.cpp */; };
@@ -73,6 +74,8 @@
 		1C7F22B51BEB24B2005D1328 /* TemporalPixelSorter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemporalPixelSorter.h; sourceTree = "<group>"; };
 		1CD7FD5A1BE53F400033492C /* FrameSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameSequence.cpp; sourceTree = "<group>"; };
 		1CD7FD5B1BE53F400033492C /* FrameSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameSequence.h; sourceTree = "<group>"; };
+		1CE787D61BEED0B800BA017A /* ColorBarChart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorBarChart.cpp; sourceTree = "<group>"; };
+		1CE787D71BEED0B800BA017A /* ColorBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBarChart.h; sourceTree = "<group>"; };
 		2B40EDA85BEB63E46785BC29 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
 		50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
 		832BDC407620CDBA568B713D /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlerror.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
@@ -232,6 +235,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				1C30B7761BDC7556005A54C1 /* BarChart.cpp */,
 				1C30B7771BDC7556005A54C1 /* BarChart.h */,
+				1CE787D61BEED0B800BA017A /* ColorBarChart.cpp */,
+				1CE787D71BEED0B800BA017A /* ColorBarChart.h */,
 				1CD7FD5A1BE53F400033492C /* FrameSequence.cpp */,
 				1CD7FD5B1BE53F400033492C /* FrameSequence.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
@@ -344,6 +349,7 @@
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
+				1CE787D81BEED0B800BA017A /* ColorBarChart.cpp in Sources */,
 				1C7F22B61BEB24B2005D1328 /* TemporalPixelSorter.cpp in Sources */,
 				1CD7FD5C1BE53F400033492C /* FrameSequence.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,

@@ -54,7 +54,13 @@ int TemporalPixelSorter::getFrameHeight() {
   return frameHeight;
 }
 
-float* TemporalPixelSorter::getBrightnessByTime(int x, int y) {
+ofColor* TemporalPixelSorter::getColorsByTime(int x, int y) {
+  ofColor* data = new ofColor[frameCount];
+  memcpy(data, pixelColors + x * frameHeight * frameCount + y * frameCount, frameCount * 4);
+  return data;
+}
+
+float* TemporalPixelSorter::getLightnessByTime(int x, int y) {
   float* data = new float[frameCount];
   for (int i = 0; i < frameCount; i++) {
     data[i] = ofMap(
