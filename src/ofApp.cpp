@@ -5,12 +5,13 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("rickmorty-dimension35c-6", 50);
+  inputFrames->loadFrames("rickmorty-dimension35c-6", 20);
 
   outputFrames = inputFrames->clone();
 
   pixelSorter = new TemporalPixelSorter(outputFrames);
-  pixelSorter->sort();
+  //pixelSorter->sort();
+  //pixelSorter->updatePixels();
 
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
@@ -83,6 +84,24 @@ void ofApp::keyReleased(int key) {
     case 'p':
       screenshot();
       break;
+    case '1':
+      step(1);
+      break;
+    case '2':
+      step(2);
+      break;
+    case '3':
+      step(3);
+      break;
+    case '4':
+      step(5);
+      break;
+    case '5':
+      step(10);
+      break;
+    case '6':
+      step(20);
+      break;
     case 's':
       string outputName = getOutputName();
       outputFrames->saveFrames(outputName);
@@ -125,6 +144,15 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::gotMessage(ofMessage msg) {
+}
+
+void ofApp::step(int n) {
+  for (int i = 0; i < n; i++) {
+    pixelSorter->step();
+  }
+  pixelSorter->updatePixels();
+  currFrameChanged();
+  setBarChart(targetX, targetY);
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo) {

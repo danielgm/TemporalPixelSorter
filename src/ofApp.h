@@ -22,6 +22,8 @@ class ofApp : public ofBaseApp {
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
+    void step(int n);
+
   private:
     FrameSequence* loadFrames(string path);
     void saveFrames(string path);

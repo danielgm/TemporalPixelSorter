@@ -3,6 +3,8 @@
 TemporalPixelSorter::TemporalPixelSorter(FrameSequence* fs) {
   frameSequence = fs;
 
+  stepNum = 0;
+
   frameCount = frameSequence->getFrameCount();
   frameWidth = frameSequence->getFrameWidth();
   frameHeight = frameSequence->getFrameHeight();
@@ -21,6 +23,8 @@ void TemporalPixelSorter::loadPixels() {
       }
     }
   }
+
+  stepNum = 0;
 }
 
 void TemporalPixelSorter::sort() {
@@ -30,6 +34,26 @@ void TemporalPixelSorter::sort() {
       std::sort(temporalColumn, temporalColumn + frameCount, comparePixel);
     }
   }
+}
+
+void TemporalPixelSorter::step() {
+  ofColor temp;
+
+  for (int x = 0; x < frameWidth; x++) {
+    for (int y = 0; y < frameHeight; y++) {
+      ofColor* temporalColumn = pixelColors + (x * frameHeight * frameCount + y * frameCount);
+
+      for (int i = stepNum % 2; i < frameCount - 1; i += 2) {
+        if (comparePixel(temporalColumn[i+1], temporalColumn[i])) {
+          temp = temporalColumn[i];
+          temporalColumn[i] = temporalColumn[i+1];
+          temporalColumn[i+1] = temp;
+        }
+      }
+    }
+  }
+
+  stepNum++;
 }
 
 void TemporalPixelSorter::updatePixels() {
