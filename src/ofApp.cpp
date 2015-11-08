@@ -5,13 +5,11 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("rickmorty-dimension35c-6-short");
-  inputSorter = new TemporalPixelSorter(inputFrames);
+  inputFrames->loadFrames("rickmorty-dimension35c-6", 100);
 
   outputFrames = inputFrames->clone();
-  outputSorter = new TemporalPixelSorter(outputFrames);
-  outputSorter->sort();
-  outputSorter->updatePixels();
+
+  TemporalPixelSorter::sort(outputFrames);
 
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
@@ -168,12 +166,12 @@ void ofApp::setBarChart(int x, int y) {
   targetX = x;
   targetY = y;
 
-  data = inputSorter->getColorsByTime(x, y);
-  frameCount = inputSorter->getFrameCount();
+  data = inputFrames->getColorsByTime(x, y);
+  frameCount = inputFrames->getFrameCount();
   inputChart->setData(data, frameCount);
 
-  data = outputSorter->getColorsByTime(x, y);
-  frameCount = outputSorter->getFrameCount();
+  data = outputFrames->getColorsByTime(x, y);
+  frameCount = outputFrames->getFrameCount();
   outputChart->setData(data, frameCount);
 }
 

@@ -13,6 +13,7 @@ class FrameSequence {
 
     void clearFrames();
     void loadFrames(string path); // alloc
+    void loadFrames(string path, int maxFrameCount); // alloc
     void saveFrames(string path);
     void allocatePixels(int count, int width, int height);
 
@@ -34,6 +35,9 @@ class FrameSequence {
     void play();
     void stop();
     unsigned char* getCurrFramePixels();
+
+    ofColor* getColorsByTime(int x, int y);
+    float* getLightnessByTime(int x, int y);
 
   private:
     int getFirstFrameIndex(string path);

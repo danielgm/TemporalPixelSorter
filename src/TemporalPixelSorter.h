@@ -6,26 +6,9 @@
 class TemporalPixelSorter {
 
   public:
-    TemporalPixelSorter(FrameSequence* frameSequence);
-    void sort();
-
-    int getFrameCount();
-    int getFrameWidth();
-    int getFrameHeight();
-
-    void loadPixels();
-    void updatePixels();
-    ofColor* getColorsByTime(int x, int y);
-    float* getLightnessByTime(int x, int y);
+    static void sort(FrameSequence* frameSequence);
 
   private:
-    FrameSequence* frameSequence;
-    ofColor* pixelColors;
-
-    int frameCount;
-    int frameWidth;
-    int frameHeight;
-
     static struct {
       bool operator()(const ofColor &c0, const ofColor &c1) {
         float v0 = c0.getLightness();

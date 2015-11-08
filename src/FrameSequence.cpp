@@ -48,6 +48,10 @@ void FrameSequence::clearFrames() {
 }
 
 void FrameSequence::loadFrames(string path) {
+  loadFrames(path, -1);
+}
+
+void FrameSequence::loadFrames(string path, int maxFrameCount) {
   ofImage image;
 
   int firstFrameIndex = getFirstFrameIndex(path);
@@ -58,7 +62,10 @@ void FrameSequence::loadFrames(string path) {
 
   image.loadImage(path + "/frame" + ofToString(firstFrameIndex, 0, 4, '0') + ".png");
 
-  allocatePixels(countFrames(path, firstFrameIndex), image.width, image.height);
+  int totalFrameCount = countFrames(path, firstFrameIndex);
+  totalFrameCount = MIN(maxFrameCount, totalFrameCount);
+
+  allocatePixels(totalFrameCount, image.width, image.height);
 
   cout << "Loading " << frameCount << " frames " << endl
     << "\tPath: " << path << endl
@@ -198,5 +205,23 @@ void FrameSequence::stop() {
 
 unsigned char* FrameSequence::getCurrFramePixels() {
   return pixels + currFrame * frameWidth * frameHeight * 3;
+}
+
+float* FrameSequence::getLightnessByTime(int x, int y) {
+  float* data = new float[frameCount];
+  for (int i = 0; i < frameCount; i++) {
+    data[i] = ofMap(
+        getColor(i, x, y).getLightness(),
+        0, 255, 0, 1);
+  }
+  return data;
+}
+
+ofColor* FrameSequence::getColorsByTime(int x, int y) {
+  ofColor* data = new ofColor[frameCount];
+  for (int i = 0; i < frameCount; i++) {
+    data[i] = getColor(i, x, y);
+  }
+  return data;
 }
 

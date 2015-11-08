@@ -32,9 +32,6 @@ class ofApp : public ofBaseApp {
 
     void screenshot();
 
-    TemporalPixelSorter* inputSorter;
-    TemporalPixelSorter* outputSorter;
-
     FrameSequence* inputFrames;
     FrameSequence* outputFrames;
 
