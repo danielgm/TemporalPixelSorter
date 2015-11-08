@@ -5,11 +5,12 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("rickmorty-dimension35c-6", 100);
+  inputFrames->loadFrames("rickmorty-dimension35c-6", 50);
 
   outputFrames = inputFrames->clone();
 
-  TemporalPixelSorter::sort(outputFrames);
+  pixelSorter = new TemporalPixelSorter(outputFrames);
+  pixelSorter->sort();
 
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
