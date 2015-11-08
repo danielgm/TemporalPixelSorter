@@ -9,6 +9,9 @@ class TemporalPixelSorter {
     TemporalPixelSorter(FrameSequence* frameSequence);
     void sort();
     void step();
+    void step(ofColor* temporalColumn);
+    void stepRangeSort(ofColor* temporalColumn);
+    void stepPairSwap(ofColor* temporalColumn);
 
     int getFrameCount();
     int getFrameWidth();

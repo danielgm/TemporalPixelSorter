@@ -5,7 +5,7 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("rickmorty-dimension35c-6", 20);
+  inputFrames->loadFrames("edgewakesmall", 40);
 
   outputFrames = inputFrames->clone();
 

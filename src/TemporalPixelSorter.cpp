@@ -37,23 +37,36 @@ void TemporalPixelSorter::sort() {
 }
 
 void TemporalPixelSorter::step() {
-  ofColor temp;
-
   for (int x = 0; x < frameWidth; x++) {
     for (int y = 0; y < frameHeight; y++) {
       ofColor* temporalColumn = pixelColors + (x * frameHeight * frameCount + y * frameCount);
-
-      for (int i = stepNum % 2; i < frameCount - 1; i += 2) {
-        if (comparePixel(temporalColumn[i+1], temporalColumn[i])) {
-          temp = temporalColumn[i];
-          temporalColumn[i] = temporalColumn[i+1];
-          temporalColumn[i+1] = temp;
-        }
-      }
+      step(temporalColumn);
     }
   }
 
   stepNum++;
+}
+
+void TemporalPixelSorter::step(ofColor* temporalColumn) {
+  stepRangeSort(temporalColumn);
+}
+
+void TemporalPixelSorter::stepRangeSort(ofColor* temporalColumn) {
+  int size = 5;
+  for (int i = stepNum % size; i < frameCount - size; i += size) {
+    std::sort(temporalColumn + i, temporalColumn + i + size, comparePixel);
+  }
+}
+
+void TemporalPixelSorter::stepPairSwap(ofColor* temporalColumn) {
+  ofColor temp;
+  for (int i = stepNum % 2; i < frameCount - 1; i += 2) {
+    if (comparePixel(temporalColumn[i+1], temporalColumn[i])) {
+      temp = temporalColumn[i];
+      temporalColumn[i] = temporalColumn[i+1];
+      temporalColumn[i+1] = temp;
+    }
+  }
 }
 
 void TemporalPixelSorter::updatePixels() {
