@@ -47,5 +47,7 @@ class ofApp : public ofBaseApp {
 
     int targetX;
     int targetY;
+
+    ofTrueTypeFont hudFont;
 };
 

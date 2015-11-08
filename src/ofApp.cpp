@@ -16,9 +16,9 @@ void ofApp::setup() {
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
 
-  setBarChart(
-      floor(inputFrames->getFrameWidth()/2),
-      floor(inputFrames->getFrameHeight()/2));
+  setBarChart(308, 118);
+
+  hudFont.loadFont("verdana.ttf", 9);
 }
 
 void ofApp::update() {
@@ -29,6 +29,8 @@ void ofApp::update() {
 
 void ofApp::draw() {
   ofBackground(0);
+
+  int y = 0;
 
   int screenWidth = ofGetWindowWidth();
   int screenHeight = ofGetWindowHeight();
@@ -46,14 +48,22 @@ void ofApp::draw() {
     outputDrawImage.draw(frameWidth, 0);
   }
 
+  y += frameHeight;
+
   ofNoFill();
   ofSetColor(255, 255, 0);
   ofCircle(targetX, targetY, 4);
   ofCircle(frameWidth + targetX, targetY, 4);
 
   int chartHeight = 150;
-  inputChart->draw(0, frameHeight, frameWidth * 2, chartHeight);
-  outputChart->draw(0, frameHeight + chartHeight, frameWidth * 2, chartHeight);
+  inputChart->draw(0, y, frameWidth * 2, chartHeight);
+  y += chartHeight;
+  outputChart->draw(0, y, frameWidth * 2, chartHeight);
+  y += chartHeight;
+
+  stringstream ss;
+  ss << "Target: " << targetX << ", " << targetY;
+  hudFont.drawString(ss.str(), 12, y + 28);
 }
 
 void ofApp::keyPressed(int key) {
