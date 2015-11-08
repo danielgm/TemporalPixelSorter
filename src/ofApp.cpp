@@ -6,9 +6,19 @@ void ofApp::setup() {
 
   inputFrames = new FrameSequence();
   inputFrames->loadFrames("rickmorty-dimension35c-6-short");
+  inputSorter = new TemporalPixelSorter(inputFrames);
 
   outputFrames = inputFrames->clone();
-  TemporalPixelSorter::sort(outputFrames);
+  outputSorter = new TemporalPixelSorter(outputFrames);
+  outputSorter->sort();
+  outputSorter->updatePixels();
+
+  inputChart = new BarChart();
+  outputChart = new BarChart();
+
+  setBarChart(
+      floor(inputFrames->getFrameWidth()/2),
+      floor(inputFrames->getFrameHeight()/2));
 }
 
 void ofApp::update() {
@@ -28,17 +38,22 @@ void ofApp::draw() {
 
   if (inputFrames != NULL) {
     ofSetColor(255);
-    inputDrawImage.draw(
-        (screenWidth - frameWidth) / 2,
-        (screenHeight - frameHeight - frameHeight) / 2);
+    inputDrawImage.draw(0, 0);
   }
 
   if (outputFrames != NULL) {
     ofSetColor(255);
-    outputDrawImage.draw(
-        (screenWidth - frameWidth) / 2,
-        (screenHeight - frameHeight - frameHeight) / 2 + frameHeight);
+    outputDrawImage.draw(frameWidth, 0);
   }
+
+  ofNoFill();
+  ofSetColor(255, 255, 0);
+  ofCircle(targetX, targetY, 4);
+  ofCircle(frameWidth + targetX, targetY, 4);
+
+  int chartHeight = 150;
+  inputChart->draw(0, frameHeight, frameWidth * 2, chartHeight);
+  outputChart->draw(0, frameHeight + chartHeight, frameWidth * 2, chartHeight);
 }
 
 void ofApp::keyPressed(int key) {
@@ -83,6 +98,25 @@ void ofApp::mousePressed(int x, int y, int button) {
 }
 
 void ofApp::mouseReleased(int x, int y, int button) {
+  int frameCount = inputFrames->getFrameCount();
+  int frameWidth = inputFrames->getFrameWidth();
+  int frameHeight = inputFrames->getFrameHeight();
+
+  if (y < frameHeight) {
+    int imageX = -1;
+    int imageY = mouseY;
+    if (x < frameWidth) {
+      imageX = x;
+    }
+    else if (x < frameWidth * 2) {
+      imageX = x - frameWidth;
+    }
+
+    if (imageX >= 0 && imageX < frameWidth
+      && imageY >= 0 && imageY < frameHeight) {
+      setBarChart(imageX, imageY);
+    }
+  }
 }
 
 void ofApp::windowResized(int w, int h) {
@@ -122,5 +156,21 @@ void ofApp::currFrameChanged() {
         outputFrames->getFrameHeight(),
         OF_IMAGE_COLOR);
   }
+}
+
+void ofApp::setBarChart(int x, int y) {
+  float* data;
+  int frameCount;
+
+  targetX = x;
+  targetY = y;
+
+  data = inputSorter->getBrightnessByTime(x, y);
+  frameCount = inputSorter->getFrameCount();
+  inputChart->setData(data, frameCount);
+
+  data = outputSorter->getBrightnessByTime(x, y);
+  frameCount = outputSorter->getFrameCount();
+  outputChart->setData(data, frameCount);
 }
 

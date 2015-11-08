@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "BarChart.h"
 #include "FrameSequence.h"
 #include "TemporalPixelSorter.h"
 
@@ -21,20 +22,27 @@ class ofApp : public ofBaseApp {
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
+  private:
     FrameSequence* loadFrames(string path);
     void saveFrames(string path);
     string getOutputName();
 
     void currFrameChanged();
+    void setBarChart(int x, int y);
 
-  private:
-    int screenWidth;
-    int screenHeight;
+    TemporalPixelSorter* inputSorter;
+    TemporalPixelSorter* outputSorter;
 
     FrameSequence* inputFrames;
     FrameSequence* outputFrames;
 
     ofImage inputDrawImage;
     ofImage outputDrawImage;
+
+    BarChart* inputChart;
+    BarChart* outputChart;
+
+    int targetX;
+    int targetY;
 };
 

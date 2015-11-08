@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "TemporalPixelSorter::getBrightnessByTime(int, int):TemporalPixelSorter.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "frameCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ofImage_&lt;unsigned char&gt;::allocate(int, int, ofImageType):ofImage.cpp">
          <PersistentStrings>
             <PersistentString
