@@ -10,6 +10,8 @@ class TemporalPixelSorter {
     void sort();
     void step();
     void step(ofColor* temporalColumn);
+    void stepDrift(ofColor* temporalColumn);
+    void stepJumpSwap(ofColor* temporalColumn);
     void stepRangeSort(ofColor* temporalColumn);
     void stepPairSwap(ofColor* temporalColumn);
 

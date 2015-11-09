@@ -48,7 +48,35 @@ void TemporalPixelSorter::step() {
 }
 
 void TemporalPixelSorter::step(ofColor* temporalColumn) {
-  stepRangeSort(temporalColumn);
+  stepDrift(temporalColumn);
+}
+
+void TemporalPixelSorter::stepDrift(ofColor* temporalColumn) {
+  for (int i = 0; i < frameCount - 1; i++) {
+    ofColor currColor = temporalColumn[i];
+    ofColor nextColor = temporalColumn[i+1];
+    if (currColor.getLightness() < nextColor.getLightness()) {
+      temporalColumn[i+1] = currColor;
+      i++;
+    }
+  }
+}
+
+void TemporalPixelSorter::stepJumpSwap(ofColor* temporalColumn) {
+  for (int i = 0; i < frameCount; i++) {
+    ofColor currColor = temporalColumn[i];
+    float currLightness = currColor.getLightness();
+
+    for (int j = i + 1; j < frameCount; j++) {
+      ofColor nextColor = temporalColumn[j];
+      if (nextColor.getLightness() < currLightness) {
+        temporalColumn[i] = nextColor;
+        temporalColumn[j] = currColor;
+        i = j + 1;
+        break;
+      }
+    }
+  }
 }
 
 void TemporalPixelSorter::stepRangeSort(ofColor* temporalColumn) {
