@@ -5,13 +5,16 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("edgewakesmall", 40);
+  inputFrames->loadFrames("rickmorty-dimension35c-4", 100);
 
   outputFrames = inputFrames->clone();
 
+  pixelBlurrer = new TemporalPixelBlurrer(outputFrames, 5);
+  /*
   pixelSorter = new TemporalPixelSorter(outputFrames);
   //pixelSorter->sort();
   //pixelSorter->updatePixels();
+  */
 
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
@@ -158,9 +161,9 @@ void ofApp::gotMessage(ofMessage msg) {
 
 void ofApp::step(int n) {
   for (int i = 0; i < n; i++) {
-    pixelSorter->step();
+    pixelBlurrer->step();
   }
-  pixelSorter->updatePixels();
+  pixelBlurrer->updatePixels();
   currFrameChanged();
   setBarChart(targetX, targetY);
 }
@@ -218,6 +221,6 @@ void ofApp::screenshot() {
   ofImage i;
   i.allocate(ofGetScreenWidth(), ofGetScreenHeight(), OF_IMAGE_COLOR);
   i.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
-  i.saveImage("screenie01.png");
+  i.saveImage("screenie.png");
 }
 

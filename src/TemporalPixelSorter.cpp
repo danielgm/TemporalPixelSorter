@@ -55,7 +55,7 @@ void TemporalPixelSorter::stepDrift(ofColor* temporalColumn) {
   for (int i = 0; i < frameCount - 1; i++) {
     ofColor currColor = temporalColumn[i];
     ofColor nextColor = temporalColumn[i+1];
-    if (currColor.getLightness() < nextColor.getLightness()) {
+    if (currColor.getLightness() > nextColor.getLightness()) {
       temporalColumn[i+1] = currColor;
       i++;
     }

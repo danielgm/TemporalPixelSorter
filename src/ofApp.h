@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ColorBarChart.h"
 #include "FrameSequence.h"
+#include "TemporalPixelBlurrer.h"
 #include "TemporalPixelSorter.h"
 
 class ofApp : public ofBaseApp {
@@ -34,6 +35,7 @@ class ofApp : public ofBaseApp {
 
     void screenshot();
 
+    TemporalPixelBlurrer* pixelBlurrer;
     TemporalPixelSorter* pixelSorter;
 
     FrameSequence* inputFrames;
