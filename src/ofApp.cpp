@@ -5,16 +5,14 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("rickmorty-dimension35c-4", 100);
+  inputFrames->loadFrames("lolarunsmall", 50);
 
   outputFrames = inputFrames->clone();
 
-  pixelBlurrer = new TemporalPixelBlurrer(outputFrames, 5);
-  /*
+  //pixelBlurrer = new TemporalPixelBlurrer(outputFrames, 5);
   pixelSorter = new TemporalPixelSorter(outputFrames);
   //pixelSorter->sort();
   //pixelSorter->updatePixels();
-  */
 
   inputChart = new ColorBarChart();
   outputChart = new ColorBarChart();
@@ -161,9 +159,9 @@ void ofApp::gotMessage(ofMessage msg) {
 
 void ofApp::step(int n) {
   for (int i = 0; i < n; i++) {
-    pixelBlurrer->step();
+    pixelSorter->step();
   }
-  pixelBlurrer->updatePixels();
+  pixelSorter->updatePixels();
   currFrameChanged();
   setBarChart(targetX, targetY);
 }

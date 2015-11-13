@@ -48,7 +48,7 @@ void TemporalPixelSorter::step() {
 }
 
 void TemporalPixelSorter::step(ofColor* temporalColumn) {
-  stepDrift(temporalColumn);
+  stepProbabilityDrift(temporalColumn);
 }
 
 void TemporalPixelSorter::stepDrift(ofColor* temporalColumn) {
@@ -56,6 +56,17 @@ void TemporalPixelSorter::stepDrift(ofColor* temporalColumn) {
     ofColor currColor = temporalColumn[i];
     ofColor nextColor = temporalColumn[i+1];
     if (currColor.getLightness() > nextColor.getLightness()) {
+      temporalColumn[i+1] = currColor;
+      i++;
+    }
+  }
+}
+
+void TemporalPixelSorter::stepProbabilityDrift(ofColor* temporalColumn) {
+  for (int i = 0; i < frameCount - 1; i++) {
+    ofColor currColor = temporalColumn[i];
+    ofColor nextColor = temporalColumn[i+1];
+    if (ofRandom(256) < currColor.getLightness()) {
       temporalColumn[i+1] = currColor;
       i++;
     }
