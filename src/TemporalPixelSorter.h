@@ -9,12 +9,6 @@ class TemporalPixelSorter {
     TemporalPixelSorter(FrameSequence* frameSequence);
     void sort();
     void step();
-    void step(ofColor* temporalColumn);
-    void stepDrift(ofColor* temporalColumn);
-    void stepProbabilityDrift(ofColor* temporalColumn);
-    void stepJumpSwap(ofColor* temporalColumn);
-    void stepRangeSort(ofColor* temporalColumn);
-    void stepPairSwap(ofColor* temporalColumn);
 
     int getFrameCount();
     int getFrameWidth();
@@ -24,6 +18,16 @@ class TemporalPixelSorter {
     void updatePixels();
 
   private:
+    void step(ofColor* temporalColumn);
+    void stepDrift(ofColor* temporalColumn);
+    void stepProbabilityDrift(ofColor* temporalColumn);
+    void stepJumpSwap(ofColor* temporalColumn);
+    void stepRangeSort(ofColor* temporalColumn);
+    void stepSimilarLightnessSort(ofColor* temporalColumn);
+    void stepPairSwap(ofColor* temporalColumn);
+
+    int getNextIndex(ofColor* temporalColumn, int startIndex);
+
     FrameSequence* frameSequence;
     ofColor* pixelColors;
 

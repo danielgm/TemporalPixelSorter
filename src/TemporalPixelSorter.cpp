@@ -47,8 +47,30 @@ void TemporalPixelSorter::step() {
   stepNum++;
 }
 
+void TemporalPixelSorter::updatePixels() {
+  for (int i = 0; i < frameCount; i++) {
+    for (int x = 0; x < frameWidth; x++) {
+      for (int y = 0; y < frameHeight; y++) {
+        frameSequence->setColor(i, x, y, pixelColors[x * frameHeight * frameCount + y * frameCount + i]);
+      }
+    }
+  }
+}
+
+int TemporalPixelSorter::getFrameCount() {
+  return frameCount;
+}
+
+int TemporalPixelSorter::getFrameWidth() {
+  return frameWidth;
+}
+
+int TemporalPixelSorter::getFrameHeight() {
+  return frameHeight;
+}
+
 void TemporalPixelSorter::step(ofColor* temporalColumn) {
-  stepProbabilityDrift(temporalColumn);
+  stepSimilarLightnessSort(temporalColumn);
 }
 
 void TemporalPixelSorter::stepDrift(ofColor* temporalColumn) {
@@ -97,6 +119,16 @@ void TemporalPixelSorter::stepRangeSort(ofColor* temporalColumn) {
   }
 }
 
+void TemporalPixelSorter::stepSimilarLightnessSort(ofColor* temporalColumn) {
+  int startIndex = 0;
+  int endIndex;
+  while (startIndex < frameCount) {
+    int endIndex = getNextIndex(temporalColumn, startIndex);
+    std::sort(temporalColumn + startIndex, temporalColumn + endIndex, comparePixel);
+    startIndex = endIndex;
+  }
+}
+
 void TemporalPixelSorter::stepPairSwap(ofColor* temporalColumn) {
   ofColor temp;
   for (int i = stepNum % 2; i < frameCount - 1; i += 2) {
@@ -108,25 +140,13 @@ void TemporalPixelSorter::stepPairSwap(ofColor* temporalColumn) {
   }
 }
 
-void TemporalPixelSorter::updatePixels() {
-  for (int i = 0; i < frameCount; i++) {
-    for (int x = 0; x < frameWidth; x++) {
-      for (int y = 0; y < frameHeight; y++) {
-        frameSequence->setColor(i, x, y, pixelColors[x * frameHeight * frameCount + y * frameCount + i]);
-      }
+int TemporalPixelSorter::getNextIndex(ofColor* temporalColumn, int startIndex) {
+  int lightnessThreshold = 40;
+  float lightness = temporalColumn[startIndex].getLightness();
+  for (int i = startIndex + 1; i < frameCount; i++) {
+    if (abs(lightness - temporalColumn[i].getLightness()) > lightnessThreshold) {
+      return i;
     }
   }
-}
-
-int TemporalPixelSorter::getFrameCount() {
   return frameCount;
 }
-
-int TemporalPixelSorter::getFrameWidth() {
-  return frameWidth;
-}
-
-int TemporalPixelSorter::getFrameHeight() {
-  return frameHeight;
-}
-
