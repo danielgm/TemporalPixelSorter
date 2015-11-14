@@ -20,6 +20,7 @@ void ofApp::setup() {
   setBarChart(308, 118);
 
   hudFont.loadFont("verdana.ttf", 9);
+  screenshotNamer.init("screenies/screenie", "png");
 }
 
 void ofApp::update() {
@@ -219,6 +220,6 @@ void ofApp::screenshot() {
   ofImage i;
   i.allocate(ofGetScreenWidth(), ofGetScreenHeight(), OF_IMAGE_COLOR);
   i.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
-  i.saveImage("screenie.png");
+  i.saveImage(screenshotNamer.next());
 }
 

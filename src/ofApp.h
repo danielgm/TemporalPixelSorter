@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ColorBarChart.h"
+#include "FileNamer.h"
 #include "FrameSequence.h"
 #include "TemporalPixelBlurrer.h"
 #include "TemporalPixelSorter.h"
@@ -51,5 +52,6 @@ class ofApp : public ofBaseApp {
     int targetY;
 
     ofTrueTypeFont hudFont;
+    FileNamer screenshotNamer;
 };
 
