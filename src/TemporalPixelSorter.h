@@ -27,6 +27,8 @@ class TemporalPixelSorter {
     void stepPairSwap(ofColor* temporalColumn);
 
     int getNextIndex(ofColor* temporalColumn, int startIndex);
+    int getNextDifferentLightness(ofColor* temporalColumn, int startIndex);
+    int getNextDarkLight(ofColor* temporalColumn, int startIndex);
 
     FrameSequence* frameSequence;
     ofColor* pixelColors;

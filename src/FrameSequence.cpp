@@ -97,7 +97,7 @@ void FrameSequence::saveFrames(string path) {
 
   for (int i = 0; i < frameCount; i++) {
     image.setFromPixels(pixels + (i * frameWidth * frameHeight * 3), frameWidth, frameHeight, OF_IMAGE_COLOR);
-    image.saveImage(path + "/frame" + ofToString(i + 1, 0, 4, '0') + ".gif");
+    image.saveImage(path + "/frame" + ofToString(i + 1, 0, 4, '0') + ".bmp");
   }
 
   cout << "Saving complete." << endl;

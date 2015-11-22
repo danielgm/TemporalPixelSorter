@@ -5,7 +5,7 @@ void ofApp::setup() {
   outputDrawImage = ofImage();
 
   inputFrames = new FrameSequence();
-  inputFrames->loadFrames("lolarunsmall", 50);
+  inputFrames->loadFrames("nuclearexplosion/out", 300);
 
   outputFrames = inputFrames->clone();
 
@@ -173,7 +173,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 string ofApp::getOutputName() {
   int i = 1;
   while (true) {
-    string path = "output/out" + ofToString(i, 0, 4, '0');
+    string path = "output/_out" + ofToString(i, 0, 4, '0');
     ofDirectory dir(path);
     if (!dir.exists()) {
       return path;

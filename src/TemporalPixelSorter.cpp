@@ -141,12 +141,30 @@ void TemporalPixelSorter::stepPairSwap(ofColor* temporalColumn) {
 }
 
 int TemporalPixelSorter::getNextIndex(ofColor* temporalColumn, int startIndex) {
-  int lightnessThreshold = 40;
+  return getNextDifferentLightness(temporalColumn, startIndex);
+}
+
+int TemporalPixelSorter::getNextDifferentLightness(ofColor* temporalColumn, int startIndex) {
+  int lightnessDifferenceThreshold = 30;
   float lightness = temporalColumn[startIndex].getLightness();
   for (int i = startIndex + 1; i < frameCount; i++) {
-    if (abs(lightness - temporalColumn[i].getLightness()) > lightnessThreshold) {
+    if (abs(lightness - temporalColumn[i].getLightness())
+        > lightnessDifferenceThreshold) {
       return i;
     }
   }
   return frameCount;
 }
+
+int TemporalPixelSorter::getNextDarkLight(ofColor* temporalColumn, int startIndex) {
+  int lightnessAbsoluteThreshold = 20;
+  float lightness = temporalColumn[startIndex].getLightness();
+  bool isLight = lightness > lightnessAbsoluteThreshold;
+  for (int i = startIndex + 1; i < frameCount; i++) {
+    if (isLight != temporalColumn[i].getLightness() > lightnessAbsoluteThreshold) {
+      return i;
+    }
+  }
+  return frameCount;
+}
+
